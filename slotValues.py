@@ -27,11 +27,8 @@ class SlotValues:
     def __init__(self):
         self.server = Server()
         self.user = User()
+        self.confirmed = False # remain: maybe we want the user to confirm
 
     def clear(self) -> bool:
         return utils.clear(self.server) and utils.clear(self.user)
 
-if __name__ == '__main__':
-    print('testing message')
-    s = Server()
-    print(s.__annotations__)
