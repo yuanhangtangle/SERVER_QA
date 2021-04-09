@@ -3,7 +3,7 @@
 > 
 > @e-mail: yuanhangtangle@gmail.com
 > 
-> @description: a QA robot that provides convenience for issue related to the servers in NLP group
+> @description: a QA robot that provides convenience for issues related to the servers in NLP group
 
 ## Pipeline
 ```mermaid
