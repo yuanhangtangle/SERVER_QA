@@ -1,7 +1,5 @@
-echo ####adding files####
+git rm -rf --cached .
 git add *
 git status
-echo ####commiting changes####
 git commit
-echo ####pushing files####
 git push
