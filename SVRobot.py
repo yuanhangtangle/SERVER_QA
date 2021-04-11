@@ -13,7 +13,7 @@ class SVRobot:
         self.slots = SlotValues()
         self.response = ""
         self.state = 'chit_chat'
-
+        self.ask_info = False
         self._say_hello()
 
     def get_user_utterance(self):
@@ -40,7 +40,7 @@ class SVRobot:
             elif not utils.is_filled(self.slots.user): # need user info
                 self._ask_user_info()
 
-        elif self.state == 'mount_server':
+        elif self.state == 'mount_disk':
             if utils.is_filled(self.slots.server):
                 self._mount_disk()
             else:
