@@ -4,7 +4,6 @@ import utils
 import random
 
 class SVRobot:
-    Available_states = NLU.Available_intents
     Available_greetings = [
             '需要我为您做什么？ 我可以帮助您进行开账号、挂盘等操作'
         ]
@@ -24,11 +23,11 @@ class SVRobot:
         self.nlu.extract_info()
 
     def track_state(self):
-        if self.nlu.intent != 'chit_chat' and self.state != self.nlu.intent: # intent changed
-            self.state = self.nlu.intent
+        if self.nlu.slots.intent != 'chit_chat' and self.state != self.nlu.slots.intent: # intent changed
+            self.state = self.nlu.slots.intent
             self.slots.clear() # remain: maybe we can retain some information
 
-        self.nlu.fill_slots(self.slots)
+        self.slots.fill_from(self.nlu.slots)
 
 
     def take_action(self):

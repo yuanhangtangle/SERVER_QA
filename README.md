@@ -100,7 +100,7 @@ graph LR
 ## Possible Requests
   - one request for a single utterance: to mount exactly one disk, to add exactly one user
   - several requests for a single utterance: 
-    - one intent for sreveral actions: to mount several disks for different servers, to add several users
+    - one intent for several actions: to mount several disks for different servers, to add several users
     - several intents: to mount a disk and also add a user
     - combination of the above
 
@@ -108,6 +108,12 @@ graph LR
 - Finish `NLU.py`
 - Refine `cvRobot.CVRobot.track_state` to use overlapping information
 - Design commands to run in the shell
-- Add more template response to make it more diverse
-- Replace priority of each intents with probability
 - Add a server profile and modify extracter
+------------------------
+
+> @datetime: 2021/04/12
+## Todo
+- Finish `NLU.extract_user_info`
+- `svRobot.state` and `svRobot.slots.intent`
+- Refine `cvRobot.CVRobot.track_state` to use overlapping information
+- Design commands to run in the shell

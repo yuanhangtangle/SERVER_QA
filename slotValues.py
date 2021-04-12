@@ -5,8 +5,13 @@ class Name_Entity:
     def __init__(self, name: str = None):
         self.name = str(name)
 
-    def clear(self) -> bool:
-        return utils.clear(self)
+    def clear(self):
+        for key in self.__dict__.keys():
+            self.__dict__[key] = None
+
+class Intent(Name_Entity):
+    def __init__(self, name: str = None):
+        super().__init__(str(name))
 
 class Server(Name_Entity):
     def __init__(self, name: str = None):
@@ -24,13 +29,26 @@ class User(Name_Entity):
 
 class SlotValues:
     def __init__(self):
+        self.intent = Intent()
         self.server = Server()
         self.disk = Disk()
         self.user = User()
-        self.confirmed = False # remain: maybe we want the user to confirm
+        # self.confirmed = False # remain: maybe we want the user to confirm
 
-    def clear(self) -> bool:
-        return utils.clear(self)
+    def clear(self):
+        for key in self.__dict__.keys():
+            self.__dict__['key'].clear()
+
+    def fill_from(self, sv):
+        for subslot in self.__dict__.keys():
+            self.__dict__[subslot] = utils.fill_obj(
+                self.__dict__[subslot],
+                sv.__dict__[subslot]
+            )
+    def print(self):
+        for subslot in self.__dict__.keys():
+            print('-'*20, subslot, '-'*20)
+            utils.print_slots(self.__dict__[subslot])
 
 if __name__ == '__main__':
     sv = SlotValues()
