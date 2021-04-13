@@ -1,9 +1,10 @@
 import utils
 import json
 import re
+import os
 from slotValues import SlotValues
 
-__test__ = True
+__test__ = utils.set_test_info(os.path.basename(__file__))
 
 with open("./profiles/disks.json", "r") as f:
     disks_config = json.load(f)
@@ -21,8 +22,11 @@ class NLU:
 
     def preprocess(self):
         self.utterance = self.utterance.lower()
+        for c in ['-', '_']:
+            self.utterance = self.utterance.replace(c, '')
 
     def extract_info(self):
+        self.slots.clear()
         self.extract_intent_info()
         # remain: slots depends on intent
         for slot in intents_config[self.slots.intent.name]['slots']:
@@ -30,7 +34,9 @@ class NLU:
                 self.extract_server_info()
             elif slot == 'disk':
                 self.extract_disk_info()
-
+        if __test__:
+            print('===== NLU =====')
+            self.slots.print()
     def extract_server_info(self):
         for _key_token in servers_config['available_key_tokens']:
             if _key_token in self.utterance:

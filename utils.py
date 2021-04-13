@@ -1,4 +1,8 @@
 #!/usr/bin/python3
+import json
+with open("./__test__.json", 'r') as f:
+    test_config = json.load(f)
+
 def is_filled(obj: object) -> bool:
     '''
     Check if a slot class is fully filled (all the slots are filled)
@@ -40,4 +44,11 @@ def fill_obj(obj_dest: object, obj_source: object):
 
 def print_slots(obj: object):
     for key in obj.__dict__.keys():
-        print(key,':',obj.__dict__[key])
+        print(
+            "{}.{} = {}".format(
+                obj.__name__, key, obj.__dict__[key]
+            )
+        )
+
+def set_test_info(basename: str):
+    return test_config[basename]
