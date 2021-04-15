@@ -155,7 +155,7 @@ class SVRobot:
 
     def _confirm_user_info(self):
         self.state = "confirm"
-        self.response = "请确认您的用户名和密码：\n用户名： {}\n密码：{} [y/n]\n".format(
+        self.response = "请确认您的用户名和密码：\n用户名： {}\n密码：{} \n[y/n]\n".format(
                 self.slots.user.name,
                 self.slots.user.password
             )

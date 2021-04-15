@@ -117,3 +117,61 @@ graph LR
 - `svRobot.state` and `svRobot.slots.intent`
 - Refine `cvRobot.CVRobot.track_state` to use overlapping information
 - Design commands to run in the shell
+-----------------------
+
+> @datetime: 2021/04/15
+
+## Project Structure
+- __test__.json
+- SVRobot
+- NLU
+  - profiles/intents.josn
+  - profiles/disks.json
+  - profiles/servers.json
+- SlotValues
+  - Server
+  - User
+  - Disk
+
+- utils
+
+## More Ideas
+- Summarize key match methods (done)
+- Record user dialogues history
+- A better implementation for state tracking
+- A better strategy for information update
+- May compute confidence or set confidence level when it is not easy to design priority-based match methods.
+- What if a single utterance contains more than one intent?
+- DAG may be introduced to modeled step-by-step strategy
+
+## Key Match Strategy:
+- server: key word matching + regular expression matching 
+- disk: key word matching + auxiliary word match
+- intent: key word matching
+  
+```mermaid
+graph LR
+    ms(matching strategy) --> mss(multi-step strategy)
+    sss(single-step strategy) --> intent
+    ms --> sss
+    mss --> server
+    server --> skw(key word matching)
+    skw --> rg(regular expression matching)
+    mss --> disk
+    disk --> dkw(key word matching)
+    dkw --> aw(auxiliary word matching)
+```
+
+**Multi-step matching strategy** can be viewed as breaking down a pattern into low-level patterns and match those low-level patterns step-by-step. The confidence on a pattern is increased if some of the low-level patterns are matched, and what patterns will be used depends on the previous matching results. Possible patterns are decreased during this process. This process can be naturally modeled by a DAG. 
+
+Advantages:
+
+- Underlying priority
+- Reduce redundant matching
+- Define confidence level naturally
+
+Disadvantages:
+
+- Human efforts
+- May meet unseen patterns
+- Only effective for simple scenes

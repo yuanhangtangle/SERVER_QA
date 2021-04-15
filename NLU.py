@@ -37,6 +37,7 @@ class NLU:
         if __test__:
             print('===== NLU =====')
             self.slots.print()
+            
     def extract_server_info(self):
         for _key_token in servers_config['available_key_tokens']:
             if _key_token in self.utterance:
@@ -50,6 +51,7 @@ class NLU:
                         aux = servers_config[_key_token][3][aux]
                     self.slots.server.name = servers_config[_key_token][2].format(aux)
                     # delete the server part in the utterance to avoid mismatch when detecting disk
+                    # the `6` here is manually chosen
                     self.utterance = self.utterance.replace(self.utterance[idx: idx + 6], " "*6)
                     if __test__:
                         print("Detect server:", self.slots.server.name)

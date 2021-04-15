@@ -43,6 +43,12 @@ def fill_obj(obj_dest: object, obj_source: object):
     return obj_dest
 
 def print_slots(obj: object):
+    '''
+    Print all the attributes in `obj`.
+
+    :param obj: instance containing a `__name__` attribute
+    :return: None
+    '''
     for key in obj.__dict__.keys():
         print(
             "{}.{} = {}".format(
