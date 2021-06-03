@@ -1,0 +1,46 @@
+{
+  "available_servers": [
+    "1080ti-1",
+    "1080ti-2",
+    "1080ti-3",
+    "1080ti-4",
+    "1080ti-5",
+    "1080ti-6",
+    "2080ti-1",
+    "2080ti-2",
+    "Titan-1",
+    "Titan-3",
+    "Titan-RTX"
+  ],
+  "available_key_tokens": [
+    "1080", "2080", "titan"
+  ],
+  "key token": [
+    "int: length of the substring to search after the key token",
+    "str: regex for auxiliary token",
+    "str: format to connect key token and auxiliary token"
+  ],
+
+  "1080": [
+    4,
+    "[1-6]",
+    "1080ti-{}",
+    {}
+  ],
+
+  "2080": [
+    4,
+    "[1-2]",
+    "2080ti-{}",
+    {}
+  ],
+
+  "titan": [
+    5,
+    "1|3|rtx",
+    "Titan-{}",
+    {
+      "rtx": "RTX"
+    }
+  ]
+}

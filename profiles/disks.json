@@ -1,0 +1,78 @@
+{
+  "//": "Disk names listed in `available_disks` is sorted by its priority and the order is essential",
+
+  "available_disks": [
+    "user_data_182a",
+    "user_data_182b",
+    "nlper_data",
+    "public_data",
+    "user_data",
+    "data_ti4_c",
+    "data_ti4_d",
+    "data_ti5_c",
+    "data_ti5_d"
+  ],
+
+  "user_data_182a": {
+    "key": "182a",
+    "auxiliary": [
+      "data", "pre", 6
+    ]
+  },
+
+  "user_data_182b": {
+    "key": "182b",
+    "auxiliary": [
+      "data", "pre", 6
+    ]
+  },
+
+  "nlper_data": {
+    "key": "nlper",
+    "auxiliary": [
+      "data", "post", 6
+    ]
+  },
+
+  "public_data": {
+    "key": "public",
+    "auxiliary": [
+      "data", "post", 8
+    ]
+  },
+
+  "user_data": {
+    "key": "user",
+    "auxiliary": [
+      "data", "post", 6
+    ]
+  },
+
+  "data_ti4_c": {
+    "key": "ti4",
+    "auxiliary": [
+      "c", "post", 3
+    ]
+  },
+
+  "data_ti4_d": {
+    "key": "ti4",
+    "auxiliary": [
+      "d", "post", 3
+    ]
+  },
+
+  "data_ti5_c": {
+    "key": "ti5",
+    "auxiliary": [
+      "c", "post", 3
+    ]
+  },
+
+  "data_ti5_d": {
+    "key": "ti5",
+    "auxiliary": [
+      "d", "post", 3
+    ]
+  }
+}

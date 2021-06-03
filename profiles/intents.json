@@ -1,0 +1,23 @@
+{
+  "available_intents": [
+    "mount_disk", "add_user", "chit_chat"
+  ],
+
+  "mount_disk": {
+    "tokens": ["掉", "挂"],
+    "slots": ["server", "disk"],
+    "cmds": "remain"
+  },
+
+  "add_user": {
+    "tokens": ["注册", "用户", "账号"],
+    "slots": ["server", "user"],
+    "cmds": "remain"
+  },
+
+  "chit_chat": {
+    "tokens": [""],
+    "slots": ["server", "disk"],
+    "cmds": ""
+  }
+}

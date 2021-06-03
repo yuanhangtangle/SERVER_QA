@@ -1,4 +1,5 @@
 {
+  "//": "whether to print test information for the module",
   "slotValues.py": 0,
   "NLU.py": 0,
   "svRobot.py": 1
