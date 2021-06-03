@@ -5,7 +5,9 @@
 > 
 > @description: a QA robot that provides convenience for issues related to the servers in NLP group. It was
 > NOT finally put into use as we decided to deal with the troubles in a much more direct manner. 
-> @NOTE: This file contains diagrams written in Mermaid, which is NOT natively supported by Github. If you are using Chrome, there are helpful extensions that can convert those Mermaid codes into diagrams.
+>
+>
+> @note: This file contains diagrams written in Mermaid, which is NOT natively supported by Github. If you are using Chrome, there are helpful extensions that can convert those Mermaid codes into diagrams.
 --------------------------
 
 ## Project Structure
