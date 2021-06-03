@@ -3,31 +3,23 @@
 > 
 > @e-mail: yuanhangtangle@gmail.com
 > 
-> @description: a QA robot that provides convenience for issues related to the servers in NLP group
+> @description: a QA robot that provides convenience for issues related to the servers in NLP group. It was
+> NOT finally put into use as we decided to deal with the troubles in a much more direct manner. 
 --------------------------
 
-> @datetime: 2021/04/09
-## Pipeline
-```mermaid
-graph TD
-    kw(scan keywords) --> st(state tracking)
-    kw --> ei(extract info)
-    ei -->|slot:value| fs
-
-    fs(fill slots) -->|lack info| ask(ask for more info)
-    ask --> kw
-    st --> fs
-    fs -->|enough info| ex(excute command)
-    ex -->|sth's wrong| re(report error)
-    ex -->|more request| kw
-```
-
 ## Project Structure
+- __test__.json
 - SVRobot
-  - NLU
-  - SlotValues: 
-    - Server
-    - user
+- NLU
+  - profiles/intents.josn
+  - profiles/disks.json
+  - profiles/servers.json
+- SlotValues
+  - Server
+  - User
+  - Disk
+- utils
+
 
 ## Work Flow
 ```mermaid
@@ -43,52 +35,7 @@ graph TD
     cmd --> guu
 ```
 
-## Todo
-- Design a NLU strategy and finish `NLU.py`
-- Refine `cvRobot.CVRobot.track_state` to use overlapping information
-- Design commands to run in the shell
-- Add more template response to make it more diverse
--------------------------------
-
-> @datetime: 2021/04/11
-
-```mermaid
-graph LR 
-    subgraph Server_List
-        sv(server) --> 1080ti
-        sv --> 2080ti
-        sv --> titan
-        1080ti --> 1-6
-        2080ti --> 1-2
-        titan --> 1,3,rtx
-
-        disk --> data_ti* 
-        data_ti* --> 4c,4d
-        data_ti* --> 5c,5d
-        disk --> user_data_182*
-        user_data_182* --> a,b
-        disk --> *_data
-        *_data --> nlper,public,user
-    end
-
-```
-
-```mermaid
-graph LR 
-    subgraph disks
-        182 -->|Y|ab[182a,182b]
-        182 -->|N|npu[nlper,public,user]
-        npu -->|N|cd[4c,4d,5c,5d]
-        cd -->|Y|data_ti
-        cd -->|N|adn[ask_disk_info]
-        data_ti -->|N| cdd(confirm_disk_data)
-        npu -->|Y|done
-        data_ti -->|Y|done((done))
-        ab -->|Y|done
-        ab -->|N|cdd
-    end
-```
-
+## Intents: Simple Keyword detection
 ```mermaid
 graph LR
     subgraph Intent
@@ -97,52 +44,6 @@ graph LR
     end
 ```
 
-## Possible Requests
-  - one request for a single utterance: to mount exactly one disk, to add exactly one user
-  - several requests for a single utterance: 
-    - one intent for several actions: to mount several disks for different servers, to add several users
-    - several intents: to mount a disk and also add a user
-    - combination of the above
-
-## Todo
-- Finish `NLU.py`
-- Refine `cvRobot.CVRobot.track_state` to use overlapping information
-- Design commands to run in the shell
-- Add a server profile and modify extracter
-------------------------
-
-> @datetime: 2021/04/12
-## Todo
-- Finish `NLU.extract_user_info`
-- `svRobot.state` and `svRobot.slots.intent`
-- Refine `cvRobot.CVRobot.track_state` to use overlapping information
-- Design commands to run in the shell
------------------------
-
-> @datetime: 2021/04/15
-
-## Project Structure
-- __test__.json
-- SVRobot
-- NLU
-  - profiles/intents.josn
-  - profiles/disks.json
-  - profiles/servers.json
-- SlotValues
-  - Server
-  - User
-  - Disk
-
-- utils
-
-## More Ideas
-- Summarize key match methods (done)
-- Record user dialogues history
-- A better implementation for state tracking
-- A better strategy for information update
-- May compute confidence or set confidence level when it is not easy to design priority-based match methods.
-- What if a single utterance contains more than one intent?
-- DAG may be introduced to modeled step-by-step strategy
 
 ## Key Match Strategy:
 - server: key word matching + regular expression matching 
@@ -164,14 +65,41 @@ graph LR
 
 **Multi-step matching strategy** can be viewed as breaking down a pattern into low-level patterns and match those low-level patterns step-by-step. The confidence on a pattern is increased if some of the low-level patterns are matched, and what patterns will be used depends on the previous matching results. Possible patterns are decreased during this process. This process can be naturally modeled by a DAG. 
 
-Advantages:
+## Server: Multi-step matching
+```mermaid
+graph LR 
+    subgraph Server_List
+        sv(server) --> 1080ti
+        sv --> 2080ti
+        sv --> titan
+        1080ti --> 1-6
+        2080ti --> 1-2
+        titan --> 1,3,rtx
 
-- Underlying priority
-- Reduce redundant matching
-- Define confidence level naturally
+        disk --> data_ti* 
+        data_ti* --> 4c,4d
+        data_ti* --> 5c,5d
+        disk --> user_data_182*
+        user_data_182* --> a,b
+        disk --> *_data
+        *_data --> nlper,public,user
+    end
 
-Disadvantages:
+```
 
-- Human efforts
-- May meet unseen patterns
-- Only effective for simple scenes
+## Disk: Multi-step matching
+```mermaid
+graph LR 
+    subgraph disks
+        182 -->|Y|ab[182a,182b]
+        182 -->|N|npu[nlper,public,user]
+        npu -->|N|cd[4c,4d,5c,5d]
+        cd -->|Y|data_ti
+        cd -->|N|adn[ask_disk_info]
+        data_ti -->|N| cdd(confirm_disk_data)
+        npu -->|Y|done
+        data_ti -->|Y|done((done))
+        ab -->|Y|done
+        ab -->|N|cdd
+    end
+```
